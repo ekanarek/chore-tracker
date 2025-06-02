@@ -1,0 +1,46 @@
+{
+  "chores": [
+    {
+      "id": 1,
+      "name": "Laundry",
+      "day": "Monday",
+      "priority": "High"
+    }, 
+    {
+      "id": 2,
+      "name": "Mop floors",
+      "day": "Sunday",
+      "priority": "Medium" 
+    }, 
+    {
+      "id": 3,
+      "name": "Organize hall closet",
+      "day": "Sunday",
+      "priority": "Low"
+    }, 
+    {
+      "id": 4,
+      "name": "Take out trash",
+      "day": "Wednesday",
+      "priority": "Very High"
+    }, 
+    {
+      "id": 5,
+      "name": "Change sheets",
+      "day": "Friday",
+      "priority": "High"
+    }, 
+    {
+      "id": 6,
+      "name": "Vacuum floors",
+      "day": "Saturday",
+      "priority": "Medium"
+    }, 
+    {
+      "id": 7,
+      "name": "Dust bookshelves",
+      "day": "Saturday",
+      "priority": "Very Low"
+    } 
+  ]
+}
