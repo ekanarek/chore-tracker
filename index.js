@@ -35,9 +35,70 @@ function displayChore(chore) {
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
 
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.addEventListener("click", () => {
+    choreCard.innerHTML = "";
+    editChore(chore, choreCard);
+  });
+
   isDone.append(checkbox);
-  choreCard.append(name, priority, isDone);
+  choreCard.append(name, priority, isDone, editBtn);
   assignedDay.append(choreCard);
+}
+
+function editChore(chore, choreCard) {
+  const editForm = document.createElement("form");
+
+  const addSelectOptions = (parentSelect, options) => {
+    options.forEach((element) => {
+      const option = document.createElement("option");
+      option.textContent = element;
+      option.value = element;
+      parentSelect.append(option);
+    });
+  };
+
+  const editName = document.createElement("input");
+  editName.value = chore.name;
+
+  const editDay = document.createElement("select");
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  addSelectOptions(editDay, days);
+  editDay.value = chore.day;
+
+  const editPriority = document.createElement("select");
+  const priorities = ["Very High", "High", "Medium", "Low", "Very Low"];
+  addSelectOptions(editPriority, priorities);
+  editPriority.value = chore.priority;
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "submit";
+  saveBtn.textContent = "Save";
+
+  editForm.append(editName, editDay, editPriority, saveBtn);
+  choreCard.append(editForm);
+
+  editForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const updatedChore = {
+      name: editName.value,
+      day: editDay.value,
+      priority: editPriority.value
+    }
+
+    choreCard.remove();
+    displayChore(updatedChore);
+  })
 }
 
 newChoreForm.addEventListener("submit", (event) => {
