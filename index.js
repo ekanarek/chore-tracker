@@ -8,6 +8,8 @@ function fetchChores() {
   fetch(choresUrl)
     .then((response) => response.json())
     .then((data) => {
+      const currentCards = document.querySelectorAll(".card");
+      currentCards.forEach((card) => card.remove());
       data.forEach((chore) => {
         displayChore(chore);
       });
@@ -142,7 +144,7 @@ newChoreForm.addEventListener("submit", (event) => {
   })
     .then((response) => response.json())
     .then(() => {
-      displayChore(newChore);
+      fetchChores();
       newChoreForm.reset();
     });
 });
