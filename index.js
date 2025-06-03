@@ -15,6 +15,7 @@ function fetchChores() {
 }
 
 function displayChore(chore) {
+  let editMode = false;
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
@@ -35,9 +36,30 @@ function displayChore(chore) {
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
 
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.addEventListener("click", () => {
+    editMode = !editMode;
+    if (editMode) {
+      editBtn.textContent = "Save";
+      enableEdit(chore);
+    } else {
+      saveChanges(chore);
+      editBtn.textContent = "Edit";
+    }
+  });
+
   isDone.append(checkbox);
-  choreCard.append(name, priority, isDone);
+  choreCard.append(name, priority, isDone, editBtn);
   assignedDay.append(choreCard);
+}
+
+function enableEdit(chore) {
+  console.log("edit mode enabled!")
+}
+
+function saveChanges(chore) {
+  console.log("changes saved!")
 }
 
 newChoreForm.addEventListener("submit", (event) => {
