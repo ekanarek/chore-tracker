@@ -86,6 +86,19 @@ function editChore(chore, choreCard) {
 
   editForm.append(editName, editDay, editPriority, saveBtn);
   choreCard.append(editForm);
+
+  editForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const updatedChore = {
+      name: editName.value,
+      day: editDay.value,
+      priority: editPriority.value
+    }
+
+    choreCard.remove();
+    displayChore(updatedChore);
+  })
 }
 
 newChoreForm.addEventListener("submit", (event) => {
