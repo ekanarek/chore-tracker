@@ -15,7 +15,6 @@ function fetchChores() {
 }
 
 function displayChore(chore) {
-  let editMode = false;
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
@@ -39,14 +38,8 @@ function displayChore(chore) {
   const editBtn = document.createElement("button");
   editBtn.textContent = "Edit";
   editBtn.addEventListener("click", () => {
-    editMode = !editMode;
-    if (editMode) {
-      editBtn.textContent = "Save";
-      enableEdit(chore);
-    } else {
-      saveChanges(chore);
-      editBtn.textContent = "Edit";
-    }
+    choreCard.innerHTML = "";
+    editChore(chore, choreCard);
   });
 
   isDone.append(checkbox);
@@ -54,12 +47,43 @@ function displayChore(chore) {
   assignedDay.append(choreCard);
 }
 
-function enableEdit(chore) {
-  console.log("edit mode enabled!")
-}
+function editChore(chore, choreCard) {
+  const editForm = document.createElement("form");
 
-function saveChanges(chore) {
-  console.log("changes saved!")
+  const addSelectOptions = (parentSelect, options) => {
+    options.forEach((element) => {
+      const option = document.createElement("option");
+      option.textContent = element;
+      option.value = element;
+      parentSelect.append(option);
+    });
+  };
+
+  const editName = document.createElement("input");
+  editName.value = chore.name;
+
+  const editDay = document.createElement("select");
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  addSelectOptions(editDay, days);
+
+  const editPriority = document.createElement("select");
+  const priorities = ["Very High", "High", "Medium", "Low", "Very Low"];
+  addSelectOptions(editPriority, priorities);
+
+  const saveBtn = document.createElement("button");
+  saveBtn.type = "submit";
+  saveBtn.textContent = "Save";
+
+  editForm.append(editName, editDay, editPriority, saveBtn);
+  choreCard.append(editForm);
 }
 
 newChoreForm.addEventListener("submit", (event) => {
