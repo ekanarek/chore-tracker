@@ -132,6 +132,17 @@ newChoreForm.addEventListener("submit", (event) => {
     priority: priorityInput,
   };
 
-  displayChore(newChore);
-  newChoreForm.reset();
+  fetch(choresUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(newChore),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      displayChore(newChore);
+      newChoreForm.reset();
+    });
 });
