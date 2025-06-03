@@ -113,8 +113,16 @@ function editChore(chore, choreCard) {
       priority: editPriority.value,
     };
 
-    choreCard.remove();
-    displayChore(updatedChore);
+    fetch(choresUrl + chore.id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(updatedChore),
+    })
+      .then((response) => response.json())
+      .then(() => fetchChores());
   });
 }
 
