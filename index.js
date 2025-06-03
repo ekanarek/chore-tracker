@@ -20,6 +20,7 @@ function displayChore(chore) {
 
   const choreCard = document.createElement("div");
   choreCard.className = "card";
+  choreCard.id = chore.id;
 
   const name = document.createElement("h5");
   name.className = "card-title";
@@ -41,8 +42,8 @@ function displayChore(chore) {
   editBtn.addEventListener("click", () => {
     editMode = !editMode;
     if (editMode) {
-      editBtn.textContent = "Save";
       enableEdit(chore);
+      editBtn.textContent = "Save";
     } else {
       saveChanges(chore);
       editBtn.textContent = "Edit";
@@ -55,11 +56,13 @@ function displayChore(chore) {
 }
 
 function enableEdit(chore) {
-  console.log("edit mode enabled!")
+  console.log("edit mode on!");
+
+  // const editName = document.createElement()
 }
 
 function saveChanges(chore) {
-  console.log("changes saved!")
+  console.log("changes saved!");
 }
 
 newChoreForm.addEventListener("submit", (event) => {
@@ -73,6 +76,15 @@ newChoreForm.addEventListener("submit", (event) => {
     day: dayInput,
     priority: priorityInput,
   };
+
+  fetch(choresUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(newChore),
+  });
 
   displayChore(newChore);
   newChoreForm.reset();
