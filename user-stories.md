@@ -8,7 +8,7 @@ As a user, I want to view all planned and completed chores, organized by day, so
 
 ### Details
 
-Designate a column for each day of the week. On page load, fetch chore data and display each chore within a card under the day it's assigned to. Chores should display in order from highest to lowest priority.
+Designate a column for each day of the week. On page load, fetch chore data and display each chore within a card under the day it's assigned to.
 
 ## Feature 2: Add New Chores
 
