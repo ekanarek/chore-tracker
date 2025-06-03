@@ -57,7 +57,7 @@ function displayChore(chore) {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
-  deleteBtn.addEventListener("click", () => deleteChore(choreCard));
+  deleteBtn.addEventListener("click", () => deleteChore(chore));
 
   checkIfDone.append(checkbox);
   choreCard.append(name, priority, checkIfDone, editBtn, deleteBtn);
@@ -126,8 +126,18 @@ function editChore(chore, choreCard) {
   });
 }
 
-function deleteChore(choreCard) {
-  choreCard.remove();
+function deleteChore(chore) {
+  fetch(choresUrl + chore.id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then(() => {
+      fetchChores();
+    });
 }
 
 newChoreForm.addEventListener("submit", (event) => {
