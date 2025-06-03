@@ -73,10 +73,12 @@ function editChore(chore, choreCard) {
     "Saturday",
   ];
   addSelectOptions(editDay, days);
+  editDay.value = chore.day;
 
   const editPriority = document.createElement("select");
   const priorities = ["Very High", "High", "Medium", "Low", "Very Low"];
   addSelectOptions(editPriority, priorities);
+  editPriority.value = chore.priority;
 
   const saveBtn = document.createElement("button");
   saveBtn.type = "submit";
