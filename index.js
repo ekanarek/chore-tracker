@@ -27,13 +27,18 @@ function displayChore(chore) {
   const priority = document.createElement("p");
   priority.textContent = `Priority: ${chore.priority}`;
 
-  const isDone = document.createElement("label");
-  isDone.for = chore.id;
-  isDone.textContent = "Done? ";
+  const checkIfDone = document.createElement("label");
+  checkIfDone.for = chore.id;
+  checkIfDone.textContent = "Done? ";
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
+  let isDone = false;
+  checkbox.addEventListener("change", () => {
+    isDone = !isDone;
+    toggleDone(isDone);
+  })
 
   const editBtn = document.createElement("button");
   editBtn.textContent = "Edit";
@@ -46,9 +51,13 @@ function displayChore(chore) {
   deleteBtn.textContent = "Delete";
   deleteBtn.addEventListener("click", () => deleteChore(choreCard))
 
-  isDone.append(checkbox);
-  choreCard.append(name, priority, isDone, editBtn, deleteBtn);
+  checkIfDone.append(checkbox);
+  choreCard.append(name, priority, checkIfDone, editBtn, deleteBtn);
   assignedDay.append(choreCard);
+}
+
+function toggleDone(isDone) {
+  console.log(isDone);
 }
 
 function editChore(chore, choreCard) {
