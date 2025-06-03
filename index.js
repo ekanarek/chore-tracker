@@ -1,4 +1,7 @@
 const choresUrl = "http://localhost:3000/chores/";
+const newChoreForm = document.querySelector("#new-chore-form");
+
+newChoreForm.reset();
 fetchChores();
 
 function fetchChores() {
@@ -36,3 +39,19 @@ function displayChore(chore) {
   choreCard.append(name, priority, isDone);
   assignedDay.append(choreCard);
 }
+
+newChoreForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const nameInput = document.querySelector("#nameInput").value;
+  const dayInput = document.querySelector("#dayInput").value;
+  const priorityInput = document.querySelector("#priorityInput").value;
+
+  const newChore = {
+    name: nameInput,
+    day: dayInput,
+    priority: priorityInput,
+  };
+
+  displayChore(newChore);
+  newChoreForm.reset();
+});
