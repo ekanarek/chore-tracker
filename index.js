@@ -42,8 +42,12 @@ function displayChore(chore) {
     editChore(chore, choreCard);
   });
 
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.addEventListener("click", () => deleteChore(choreCard))
+
   isDone.append(checkbox);
-  choreCard.append(name, priority, isDone, editBtn);
+  choreCard.append(name, priority, isDone, editBtn, deleteBtn);
   assignedDay.append(choreCard);
 }
 
@@ -99,6 +103,10 @@ function editChore(chore, choreCard) {
     choreCard.remove();
     displayChore(updatedChore);
   })
+}
+
+function deleteChore(choreCard) {
+  choreCard.remove();
 }
 
 newChoreForm.addEventListener("submit", (event) => {
