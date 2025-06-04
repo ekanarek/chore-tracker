@@ -28,40 +28,39 @@
       </button>
 
       <div class="collapse" id="choreForm">
-        <form
-          id="new-chore-form"
-          class="container my-4 p-4 border rounded shadow-sm bg-light"
-        >
-          <div class="mb-3">
-            <label for="nameInput" class="form-label">Chore name:</label>
-            <input type="text" id="nameInput" class="form-control" />
-          </div>
-          <div class="mb-3">
-            <label for="dayInput" class="form-label">Day assigned:</label>
-            <select id="dayInput" class="form-select">
-              <option value="Sunday">Sunday</option>
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="priorityInput" class="form-label"
-              >Priority level:</label
-            >
-            <select id="priorityInput" class="form-select">
-              <option value="Very High">Very High</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-              <option value="Very Low">Very Low</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Submit</button>
-        </form>
+        <div class="collapse-inner bg-light border rounded shadow-sm p-4">
+          <form id="new-chore-form">
+            <div class="mb-3">
+              <label for="nameInput" class="form-label">Chore name:</label>
+              <input type="text" id="nameInput" class="form-control" />
+            </div>
+            <div class="mb-3">
+              <label for="dayInput" class="form-label">Day assigned:</label>
+              <select id="dayInput" class="form-select">
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="priorityInput" class="form-label"
+                >Priority level:</label
+              >
+              <select id="priorityInput" class="form-select">
+                <option value="Very High">Very High</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <option value="Very Low">Very Low</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
     <div class="container text-center">
