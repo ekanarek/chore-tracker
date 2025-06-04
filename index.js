@@ -48,7 +48,6 @@ function displayChore(chore) {
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
-  // choreCard.className = chore.completed ? "card text-secondary" : "card";
   choreCard.className = `card mb-2 p-2 shadow-sm ${chore.completed ? 'text-muted bg-light' : ''}`;
 
   const name = document.createElement("h5");
@@ -108,6 +107,7 @@ function toggleComplete(chore, isComplete) {
 
 function editChore(chore, choreCard) {
   const editForm = document.createElement("form");
+  editForm.className = "d-flex flex-column gap-2"
 
   const addSelectOptions = (parentSelect, options) => {
     options.forEach((element) => {
@@ -120,12 +120,16 @@ function editChore(chore, choreCard) {
 
   const editName = document.createElement("input");
   editName.value = chore.name;
+  editName.className = "form-control";
+  editName.placeholder = "Chore name";
 
   const editDay = document.createElement("select");
+  editDay.className = "form-select";
   addSelectOptions(editDay, days);
   editDay.value = chore.day;
 
   const editPriority = document.createElement("select");
+  editPriority.className = "form-select";
   const priorities = ["Very High", "High", "Medium", "Low", "Very Low"];
   addSelectOptions(editPriority, priorities);
   editPriority.value = chore.priority;
@@ -133,6 +137,7 @@ function editChore(chore, choreCard) {
   const saveBtn = document.createElement("button");
   saveBtn.type = "submit";
   saveBtn.textContent = "Save";
+  saveBtn.className = "btn btn-success"
 
   editForm.append(editName, editDay, editPriority, saveBtn);
   choreCard.append(editForm);
