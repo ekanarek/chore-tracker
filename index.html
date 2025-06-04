@@ -14,13 +14,13 @@
     />
   </head>
   <body>
-    <form id="new-chore-form">
-      <h2>Add a New Chore</h2>
-      <div>
+    <form id="new-chore-form" class="container my-4 p-4 border rounded shadow-sm bg-light">
+      <h2 class="mb-4">Add a New Chore</h2>
+      <div class="mb-3">
         <label for="nameInput" class="form-label">Chore name:</label>
         <input type="text" id="nameInput" class="form-control" />
       </div>
-      <div>
+      <div class="mb-3">
         <label for="dayInput" class="form-label">Day assigned:</label>
         <select id="dayInput" class="form-select">
           <option value="Sunday">Sunday</option>
@@ -32,7 +32,7 @@
           <option value="Saturday">Saturday</option>
         </select>
       </div>
-      <div>
+      <div class="mb-4">
         <label for="priorityInput" class="form-label">Priority level:</label>
         <select id="priorityInput" class="form-select">
           <option value="Very High">Very High</option>
@@ -42,7 +42,7 @@
           <option value="Very Low">Very Low</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
     </form>
     <div class="container text-center">
       <div class="row align-items-start">
