@@ -48,7 +48,8 @@ function displayChore(chore) {
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
-  choreCard.className = chore.completed ? "card text-secondary" : "card";
+  // choreCard.className = chore.completed ? "card text-secondary" : "card";
+  choreCard.className = `card mb-2 p-2 shadow-sm ${chore.completed ? 'text-muted bg-light' : ''}`;
 
   const name = document.createElement("h5");
   name.className = "card-title";
@@ -56,18 +57,21 @@ function displayChore(chore) {
 
   const priority = document.createElement("p");
   priority.textContent = `Priority: ${chore.priority}`;
+  priority.className = "card-subtitle mb-2 text-muted";
 
   const checkIfDone = document.createElement("label");
   checkIfDone.htmlFor = chore.id;
-  checkIfDone.textContent = "Done? ";
+  checkIfDone.textContent = "Done?";
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
+  checkbox.className = "form-check-input ms-2";
   checkbox.checked = chore.completed;
   checkbox.addEventListener("change", () => toggleComplete(chore, checkbox.checked));
 
   const editBtn = document.createElement("button");
+  editBtn.className = "btn btn-sm btn-warning me-2"
   editBtn.textContent = "Edit";
   editBtn.disabled = checkbox.checked;
   editBtn.addEventListener("click", () => {
@@ -76,11 +80,16 @@ function displayChore(chore) {
   });
 
   const deleteBtn = document.createElement("button");
+  deleteBtn.className = "btn btn-sm btn-danger"
   deleteBtn.textContent = "Delete";
   deleteBtn.addEventListener("click", () => deleteChore(chore));
 
+  const buttonGroup = document.createElement("div");
+  buttonGroup.className = "mt-2"
+  buttonGroup.append(editBtn, deleteBtn);
+
   checkIfDone.append(checkbox);
-  choreCard.append(name, priority, checkIfDone, editBtn, deleteBtn);
+  choreCard.append(name, priority, checkIfDone, buttonGroup);
   assignedDay.append(choreCard);
 }
 
