@@ -52,6 +52,9 @@ function displayChore(chore) {
     chore.completed ? "text-muted bg-light" : ""
   }`;
 
+  const cardBody = document.createElement("div");
+  cardBody.className = "mb-2";
+
   const name = document.createElement("h5");
   name.className = "card-title";
   name.textContent = chore.name;
@@ -74,7 +77,7 @@ function displayChore(chore) {
   );
 
   const editBtn = document.createElement("button");
-  editBtn.className = "btn btn-sm btn-warning me-2";
+  editBtn.className = "btn btn-sm btn-warning";
   editBtn.textContent = "Edit";
   editBtn.disabled = checkbox.checked;
   editBtn.addEventListener("click", () => {
@@ -88,11 +91,12 @@ function displayChore(chore) {
   deleteBtn.addEventListener("click", () => deleteChore(chore));
 
   const buttonGroup = document.createElement("div");
-  buttonGroup.className = "mt-2";
+  buttonGroup.className = "d-flex justify-content-center gap-2 mt-auto";
   buttonGroup.append(editBtn, deleteBtn);
 
   checkIfDone.append(checkbox);
-  choreCard.append(name, priority, checkIfDone, buttonGroup);
+  cardBody.append(name, priority, checkIfDone)
+  choreCard.append(cardBody, buttonGroup);
   assignedDay.append(choreCard);
 }
 
@@ -110,8 +114,10 @@ function toggleComplete(chore, isComplete) {
 }
 
 function editChore(chore, choreCard) {
+  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm";
+  
   const editForm = document.createElement("form");
-  editForm.className = "d-flex flex-column gap-2";
+  editForm.className = "d-flex flex-column gap-2 flex-grow-1";
 
   const addSelectOptions = (parentSelect, options) => {
     options.forEach((element) => {
@@ -146,11 +152,11 @@ function editChore(chore, choreCard) {
   const cancelBtn = document.createElement("button");
   cancelBtn.type = "button";
   cancelBtn.textContent = "Cancel";
-  cancelBtn.className = "btn btn-secondary btn-sm ms-2";
+  cancelBtn.className = "btn btn-secondary btn-sm";
   cancelBtn.addEventListener("click", () => fetchChores());
 
   const btnGroup = document.createElement("div");
-  btnGroup.className = "mt-2";
+  btnGroup.className = "d-flex justify-content-center gap-2 mt-1";
   btnGroup.append(saveBtn, cancelBtn);
 
   editForm.append(editName, editDay, editPriority, btnGroup);
