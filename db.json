@@ -1,46 +1,101 @@
 {
   "chores": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Laundry",
       "day": "Monday",
-      "priority": "High"
-    }, 
+      "priority": "High",
+      "completed": false
+    },
     {
-      "id": 2,
+      "id": "2",
       "name": "Mop floors",
       "day": "Sunday",
-      "priority": "Medium" 
-    }, 
+      "priority": "Medium"
+    },
     {
-      "id": 3,
+      "id": "3",
       "name": "Organize hall closet",
       "day": "Sunday",
-      "priority": "Low"
-    }, 
+      "priority": "Low",
+      "completed": false
+    },
     {
-      "id": 4,
-      "name": "Take out trash",
+      "id": "4",
+      "name": "Take out recycling",
       "day": "Wednesday",
-      "priority": "Very High"
-    }, 
+      "priority": "Very High",
+      "completed": false
+    },
     {
-      "id": 5,
+      "id": "5",
       "name": "Change sheets",
       "day": "Friday",
-      "priority": "High"
-    }, 
+      "priority": "High",
+      "completed": false
+    },
     {
-      "id": 6,
+      "id": "6",
       "name": "Vacuum floors",
       "day": "Saturday",
-      "priority": "Medium"
-    }, 
+      "priority": "Medium",
+      "completed": false
+    },
     {
-      "id": 7,
+      "id": "7",
       "name": "Dust bookshelves",
       "day": "Saturday",
-      "priority": "Very Low"
-    } 
+      "priority": "Very Low",
+      "completed": false
+    },
+    {
+      "id": "8",
+      "name": "Dishes",
+      "day": "Saturday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "9",
+      "name": "Dishes",
+      "day": "Sunday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "10",
+      "name": "Dishes",
+      "day": "Monday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "11",
+      "name": "Dishes",
+      "day": "Tuesday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "12",
+      "name": "Dishes",
+      "day": "Wednesday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "13",
+      "name": "Dishes",
+      "day": "Thursday",
+      "priority": "Medium",
+      "completed": false
+    },
+    {
+      "id": "14",
+      "name": "Dishes",
+      "day": "Friday",
+      "priority": "Medium",
+      "completed": false
+    }
   ]
 }

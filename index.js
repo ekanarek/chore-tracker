@@ -1,5 +1,14 @@
 const choresUrl = "http://localhost:3000/chores/";
 const newChoreForm = document.querySelector("#new-chore-form");
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
 
 newChoreForm.reset();
 fetchChores();
@@ -10,8 +19,27 @@ function fetchChores() {
     .then((data) => {
       const currentCards = document.querySelectorAll(".card");
       currentCards.forEach((card) => card.remove());
-      data.forEach((chore) => {
-        displayChore(chore);
+
+      days.forEach((day) => {
+        const choresForDay = data.filter((chore) => chore.day === day);
+
+        choresForDay.sort((a, b) => {
+          const priorityMap = {
+            "Very High": 5,
+            High: 4,
+            Medium: 3,
+            Low: 2,
+            "Very Low": 1,
+          };
+
+          if (a.completed !== b.completed) {
+            return a.completed - b.completed;
+          }
+
+          return priorityMap[b.priority] - priorityMap[a.priority];
+        });
+
+        choresForDay.forEach((chore) => displayChore(chore));
       });
     });
 }
@@ -20,7 +48,7 @@ function displayChore(chore) {
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
-  choreCard.className = "card";
+  choreCard.className = chore.completed ? "card text-secondary" : "card";
 
   const name = document.createElement("h5");
   name.className = "card-title";
@@ -30,26 +58,18 @@ function displayChore(chore) {
   priority.textContent = `Priority: ${chore.priority}`;
 
   const checkIfDone = document.createElement("label");
-  checkIfDone.for = chore.id;
+  checkIfDone.htmlFor = chore.id;
   checkIfDone.textContent = "Done? ";
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
-  let isDone = false;
-  checkbox.addEventListener("change", () => {
-    isDone = !isDone;
-    if (isDone) {
-      editBtn.setAttribute("disabled", "true");
-      choreCard.className = "card text-secondary";
-    } else if (!isDone) {
-      editBtn.removeAttribute("disabled");
-      choreCard.className = "card";
-    }
-  });
+  checkbox.checked = chore.completed;
+  checkbox.addEventListener("change", () => toggleComplete(chore, checkbox.checked));
 
   const editBtn = document.createElement("button");
   editBtn.textContent = "Edit";
+  editBtn.disabled = checkbox.checked;
   editBtn.addEventListener("click", () => {
     choreCard.innerHTML = "";
     editChore(chore, choreCard);
@@ -62,6 +82,19 @@ function displayChore(chore) {
   checkIfDone.append(checkbox);
   choreCard.append(name, priority, checkIfDone, editBtn, deleteBtn);
   assignedDay.append(choreCard);
+}
+
+function toggleComplete(chore, isComplete) {
+  fetch(choresUrl + chore.id, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({ completed: isComplete }),
+  })
+    .then((response) => response.json())
+    .then(() => fetchChores());
 }
 
 function editChore(chore, choreCard) {
@@ -80,15 +113,6 @@ function editChore(chore, choreCard) {
   editName.value = chore.name;
 
   const editDay = document.createElement("select");
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
   addSelectOptions(editDay, days);
   editDay.value = chore.day;
 
@@ -150,6 +174,7 @@ newChoreForm.addEventListener("submit", (event) => {
     name: nameInput,
     day: dayInput,
     priority: priorityInput,
+    completed: false
   };
 
   fetch(choresUrl, {
