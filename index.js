@@ -48,7 +48,12 @@ function displayChore(chore) {
   const assignedDay = document.querySelector(`div#${chore.day}`);
 
   const choreCard = document.createElement("div");
-  choreCard.className = chore.completed ? "card text-secondary" : "card";
+  choreCard.className = `card mb-2 p-2 shadow-sm ${
+    chore.completed ? "text-muted bg-light" : ""
+  }`;
+
+  const cardBody = document.createElement("div");
+  cardBody.className = "mb-2";
 
   const name = document.createElement("h5");
   name.className = "card-title";
@@ -56,18 +61,23 @@ function displayChore(chore) {
 
   const priority = document.createElement("p");
   priority.textContent = `Priority: ${chore.priority}`;
+  priority.className = "card-subtitle mb-2 text-muted";
 
   const checkIfDone = document.createElement("label");
   checkIfDone.htmlFor = chore.id;
-  checkIfDone.textContent = "Done? ";
+  checkIfDone.textContent = "Done?";
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = chore.id;
+  checkbox.className = "form-check-input ms-2";
   checkbox.checked = chore.completed;
-  checkbox.addEventListener("change", () => toggleComplete(chore, checkbox.checked));
+  checkbox.addEventListener("change", () =>
+    toggleComplete(chore, checkbox.checked)
+  );
 
   const editBtn = document.createElement("button");
+  editBtn.className = "btn btn-sm btn-warning";
   editBtn.textContent = "Edit";
   editBtn.disabled = checkbox.checked;
   editBtn.addEventListener("click", () => {
@@ -76,11 +86,17 @@ function displayChore(chore) {
   });
 
   const deleteBtn = document.createElement("button");
+  deleteBtn.className = "btn btn-sm btn-danger";
   deleteBtn.textContent = "Delete";
   deleteBtn.addEventListener("click", () => deleteChore(chore));
 
+  const buttonGroup = document.createElement("div");
+  buttonGroup.className = "d-flex justify-content-center gap-2 mt-auto";
+  buttonGroup.append(editBtn, deleteBtn);
+
   checkIfDone.append(checkbox);
-  choreCard.append(name, priority, checkIfDone, editBtn, deleteBtn);
+  cardBody.append(name, priority, checkIfDone)
+  choreCard.append(cardBody, buttonGroup);
   assignedDay.append(choreCard);
 }
 
@@ -98,7 +114,10 @@ function toggleComplete(chore, isComplete) {
 }
 
 function editChore(chore, choreCard) {
+  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
+  
   const editForm = document.createElement("form");
+  editForm.className = "d-flex flex-column gap-2 flex-grow-1";
 
   const addSelectOptions = (parentSelect, options) => {
     options.forEach((element) => {
@@ -111,12 +130,16 @@ function editChore(chore, choreCard) {
 
   const editName = document.createElement("input");
   editName.value = chore.name;
+  editName.className = "form-control";
+  editName.placeholder = "Chore name";
 
   const editDay = document.createElement("select");
+  editDay.className = "form-select";
   addSelectOptions(editDay, days);
   editDay.value = chore.day;
 
   const editPriority = document.createElement("select");
+  editPriority.className = "form-select";
   const priorities = ["Very High", "High", "Medium", "Low", "Very Low"];
   addSelectOptions(editPriority, priorities);
   editPriority.value = chore.priority;
@@ -124,8 +147,19 @@ function editChore(chore, choreCard) {
   const saveBtn = document.createElement("button");
   saveBtn.type = "submit";
   saveBtn.textContent = "Save";
+  saveBtn.className = "btn btn-success btn-sm";
 
-  editForm.append(editName, editDay, editPriority, saveBtn);
+  const cancelBtn = document.createElement("button");
+  cancelBtn.type = "button";
+  cancelBtn.textContent = "Cancel";
+  cancelBtn.className = "btn btn-secondary btn-sm";
+  cancelBtn.addEventListener("click", () => fetchChores());
+
+  const btnGroup = document.createElement("div");
+  btnGroup.className = "d-flex justify-content-center gap-2 mt-1";
+  btnGroup.append(saveBtn, cancelBtn);
+
+  editForm.append(editName, editDay, editPriority, btnGroup);
   choreCard.append(editForm);
 
   editForm.addEventListener("submit", (event) => {
@@ -174,7 +208,7 @@ newChoreForm.addEventListener("submit", (event) => {
     name: nameInput,
     day: dayInput,
     priority: priorityInput,
-    completed: false
+    completed: false,
   };
 
   fetch(choresUrl, {
@@ -191,3 +225,14 @@ newChoreForm.addEventListener("submit", (event) => {
       newChoreForm.reset();
     });
 });
+
+const formCollapse = document.querySelector("#choreForm");
+const toggleBtn = document.querySelector("#toggleChoreFormBtn");
+
+formCollapse.addEventListener("show.bs.collapse", () => {
+  toggleBtn.textContent = "- Hide Form";
+})
+
+formCollapse.addEventListener("hide.bs.collapse", () => {
+  toggleBtn.textContent = "+ Add Chore";
+})
