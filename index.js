@@ -114,7 +114,7 @@ function toggleComplete(chore, isComplete) {
 }
 
 function editChore(chore, choreCard) {
-  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm";
+  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
   
   const editForm = document.createElement("form");
   editForm.className = "d-flex flex-column gap-2 flex-grow-1";
