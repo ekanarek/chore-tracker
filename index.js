@@ -225,3 +225,14 @@ newChoreForm.addEventListener("submit", (event) => {
       newChoreForm.reset();
     });
 });
+
+const formCollapse = document.querySelector("#choreForm");
+const toggleBtn = document.querySelector("#toggleChoreFormBtn");
+
+formCollapse.addEventListener("show.bs.collapse", () => {
+  toggleBtn.textContent = "- Hide Form";
+})
+
+formCollapse.addEventListener("hide.bs.collapse", () => {
+  toggleBtn.textContent = "+ Add Chore";
+})
