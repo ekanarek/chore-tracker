@@ -1,0 +1,23 @@
+.day {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.card {
+  min-height: 150px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.card input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.card:hover {
+  background-color: #f1f1f1;
+}
