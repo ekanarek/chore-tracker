@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: chore-tracker
-    env: node
-    buildCommand: npm install
-    startCommand: npm start
