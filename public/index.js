@@ -1,4 +1,4 @@
-const choresUrl = "http://localhost:3000/chores/";
+const choresUrl = "http://localhost:3000/api/chores/";
 const newChoreForm = document.querySelector("#new-chore-form");
 const days = [
   "Sunday",
