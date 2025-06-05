@@ -133,6 +133,8 @@ function editChore(chore, choreCard) {
   editName.value = chore.name;
   editName.className = "form-control";
   editName.placeholder = "Chore name";
+  const nameContainer = document.createElement("div");
+  nameContainer.append(editName);
 
   const editDay = document.createElement("select");
   editDay.className = "form-select";
@@ -160,15 +162,25 @@ function editChore(chore, choreCard) {
   btnGroup.className = "d-flex justify-content-center gap-2 mt-1";
   btnGroup.append(saveBtn, cancelBtn);
 
-  editForm.append(editName, editDay, editPriority, btnGroup);
+  editForm.append(nameContainer, editDay, editPriority, btnGroup);
   choreCard.append(editForm);
 
   editForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    if (editName.value === "") {
-      alert("Name is required.");
-    } else {
+    const existingError = document.querySelector("#edit-name-error-msg");
+
+    if (editName.value === "" && !existingError) {
+      const editNameError = document.createElement("p");
+      editNameError.textContent = "Name is required.";
+      editNameError.id = "edit-name-error-msg";
+      editNameError.style.color = "red";
+      nameContainer.append(editNameError);
+    } else if (editName.value !== "") {
+      if (existingError) {
+        existingError.remove();
+      }
+
       const updatedChore = {
         name: editName.value,
         day: editDay.value,
