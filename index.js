@@ -95,7 +95,7 @@ function displayChore(chore) {
   buttonGroup.append(editBtn, deleteBtn);
 
   checkIfDone.append(checkbox);
-  cardBody.append(name, priority, checkIfDone)
+  cardBody.append(name, priority, checkIfDone);
   choreCard.append(cardBody, buttonGroup);
   assignedDay.append(choreCard);
 }
@@ -114,8 +114,9 @@ function toggleComplete(chore, isComplete) {
 }
 
 function editChore(chore, choreCard) {
-  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
-  
+  choreCard.className =
+    "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
+
   const editForm = document.createElement("form");
   editForm.className = "d-flex flex-column gap-2 flex-grow-1";
 
@@ -201,6 +202,8 @@ function deleteChore(chore) {
 newChoreForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const nameInput = document.querySelector("#nameInput").value;
+  const nameInputContainer = document.querySelector("#name-input-div");
+  const existingError = document.querySelector("#name-error-msg");
   const dayInput = document.querySelector("#dayInput").value;
   const priorityInput = document.querySelector("#priorityInput").value;
 
@@ -211,19 +214,28 @@ newChoreForm.addEventListener("submit", (event) => {
     completed: false,
   };
 
-  fetch(choresUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(newChore),
-  })
-    .then((response) => response.json())
-    .then(() => {
-      fetchChores();
-      newChoreForm.reset();
-    });
+  if (nameInput === "" && !existingError) {
+    const noNameError = document.createElement("p");
+    noNameError.textContent = "Name is required.";
+    noNameError.id = "name-error-msg";
+    noNameError.style.color = "red";
+    nameInputContainer.append(noNameError);
+  } else if (nameInput !== "") {
+    fetch(choresUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(newChore),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        fetchChores();
+        newChoreForm.reset();
+        existingError.remove();
+      });
+  }
 });
 
 const formCollapse = document.querySelector("#choreForm");
@@ -231,8 +243,8 @@ const toggleBtn = document.querySelector("#toggleChoreFormBtn");
 
 formCollapse.addEventListener("show.bs.collapse", () => {
   toggleBtn.textContent = "- Hide Form";
-})
+});
 
 formCollapse.addEventListener("hide.bs.collapse", () => {
   toggleBtn.textContent = "+ Add Chore";
-})
+});
