@@ -166,22 +166,26 @@ function editChore(chore, choreCard) {
   editForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const updatedChore = {
-      name: editName.value,
-      day: editDay.value,
-      priority: editPriority.value,
-    };
+    if (editName.value === "") {
+      alert("Name is required.");
+    } else {
+      const updatedChore = {
+        name: editName.value,
+        day: editDay.value,
+        priority: editPriority.value,
+      };
 
-    fetch(choresUrl + chore.id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(updatedChore),
-    })
-      .then((response) => response.json())
-      .then(() => fetchChores());
+      fetch(choresUrl + chore.id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(updatedChore),
+      })
+        .then((response) => response.json())
+        .then(() => fetchChores());
+    }
   });
 }
 
