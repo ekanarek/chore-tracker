@@ -95,7 +95,7 @@ function displayChore(chore) {
   buttonGroup.append(editBtn, deleteBtn);
 
   checkIfDone.append(checkbox);
-  cardBody.append(name, priority, checkIfDone)
+  cardBody.append(name, priority, checkIfDone);
   choreCard.append(cardBody, buttonGroup);
   assignedDay.append(choreCard);
 }
@@ -114,8 +114,9 @@ function toggleComplete(chore, isComplete) {
 }
 
 function editChore(chore, choreCard) {
-  choreCard.className = "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
-  
+  choreCard.className =
+    "card d-flex flex-column justify-content-between p-3 shadow-sm mb-2";
+
   const editForm = document.createElement("form");
   editForm.className = "d-flex flex-column gap-2 flex-grow-1";
 
@@ -132,6 +133,8 @@ function editChore(chore, choreCard) {
   editName.value = chore.name;
   editName.className = "form-control";
   editName.placeholder = "Chore name";
+  const nameContainer = document.createElement("div");
+  nameContainer.append(editName);
 
   const editDay = document.createElement("select");
   editDay.className = "form-select";
@@ -159,28 +162,42 @@ function editChore(chore, choreCard) {
   btnGroup.className = "d-flex justify-content-center gap-2 mt-1";
   btnGroup.append(saveBtn, cancelBtn);
 
-  editForm.append(editName, editDay, editPriority, btnGroup);
+  editForm.append(nameContainer, editDay, editPriority, btnGroup);
   choreCard.append(editForm);
 
   editForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const updatedChore = {
-      name: editName.value,
-      day: editDay.value,
-      priority: editPriority.value,
-    };
+    const existingError = document.querySelector("#edit-name-error-msg");
 
-    fetch(choresUrl + chore.id, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(updatedChore),
-    })
-      .then((response) => response.json())
-      .then(() => fetchChores());
+    if (editName.value === "" && !existingError) {
+      const editNameError = document.createElement("p");
+      editNameError.textContent = "Name is required.";
+      editNameError.id = "edit-name-error-msg";
+      editNameError.style.color = "red";
+      nameContainer.append(editNameError);
+    } else if (editName.value !== "") {
+      if (existingError) {
+        existingError.remove();
+      }
+
+      const updatedChore = {
+        name: editName.value,
+        day: editDay.value,
+        priority: editPriority.value,
+      };
+
+      fetch(choresUrl + chore.id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(updatedChore),
+      })
+        .then((response) => response.json())
+        .then(() => fetchChores());
+    }
   });
 }
 
@@ -201,6 +218,8 @@ function deleteChore(chore) {
 newChoreForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const nameInput = document.querySelector("#nameInput").value;
+  const nameInputContainer = document.querySelector("#name-input-div");
+  const existingError = document.querySelector("#name-error-msg");
   const dayInput = document.querySelector("#dayInput").value;
   const priorityInput = document.querySelector("#priorityInput").value;
 
@@ -211,19 +230,28 @@ newChoreForm.addEventListener("submit", (event) => {
     completed: false,
   };
 
-  fetch(choresUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(newChore),
-  })
-    .then((response) => response.json())
-    .then(() => {
-      fetchChores();
-      newChoreForm.reset();
-    });
+  if (nameInput === "" && !existingError) {
+    const noNameError = document.createElement("p");
+    noNameError.textContent = "Name is required.";
+    noNameError.id = "name-error-msg";
+    noNameError.style.color = "red";
+    nameInputContainer.append(noNameError);
+  } else if (nameInput !== "") {
+    fetch(choresUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(newChore),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        fetchChores();
+        newChoreForm.reset();
+        existingError.remove();
+      });
+  }
 });
 
 const formCollapse = document.querySelector("#choreForm");
@@ -231,8 +259,8 @@ const toggleBtn = document.querySelector("#toggleChoreFormBtn");
 
 formCollapse.addEventListener("show.bs.collapse", () => {
   toggleBtn.textContent = "- Hide Form";
-})
+});
 
 formCollapse.addEventListener("hide.bs.collapse", () => {
   toggleBtn.textContent = "+ Add Chore";
-})
+});
