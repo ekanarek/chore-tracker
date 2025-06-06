@@ -202,17 +202,21 @@ function editChore(chore, choreCard) {
 }
 
 function deleteChore(chore) {
-  fetch(choresUrl + chore.id, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then(() => {
-      fetchChores();
-    });
+  if (
+    confirm("Are you sure you would like to delete? This cannot be undone.")
+  ) {
+    fetch(choresUrl + chore.id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(() => {
+        fetchChores();
+      });
+  }
 }
 
 newChoreForm.addEventListener("submit", (event) => {
